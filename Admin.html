@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile | Make A Blood Relation</title>
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="Admin.js" defer></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="Index.html">Make A Blood Relation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="Index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Donor.html">Donor</a></li>
+                <li class="nav-item"><a class="nav-link" href="BloodAvailability.html">Blood Availability</a></li>
+                <li class="nav-item"><a class="nav-link" href="Receiver.html">Receiver</a></li>
+                <li class="nav-item"><a class="nav-link" href="About.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="LifeSavers.html">Life Savers</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="Admin.html">Admin Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="admin-profile">
+        <section class="admin-profile-header">
+            <div class="admin-avatar" aria-hidden="true">A</div>
+            <div>
+                <p class="admin-eyebrow">Make A Blood Relation</p>
+                <h1>Administrator Profile</h1>
+                <p class="admin-role">Website Administrator</p>
+                <p class="admin-bio">Helping maintain this blood donation information and connection service for donors and people seeking blood.</p>
+            </div>
+        </section>
+
+        <section id="signed-in-profile" class="admin-auth-card" hidden aria-labelledby="signed-in-title">
+            <div>
+                <p class="admin-eyebrow">Signed-in account</p>
+                <h2 id="signed-in-title">Welcome, <span id="profile-name"></span></h2>
+                <p><span id="profile-username"></span> · <span id="profile-role"></span></p>
+            </div>
+            <button id="admin-logout" class="btn btn-outline-danger" type="button">Sign out</button>
+        </section>
+
+        <section id="admin-auth-panel" class="admin-auth-card" aria-labelledby="login-title">
+            <h2 id="login-title">Administrator sign in</h2>
+            <p id="setup-help" class="admin-detail-note" hidden>
+                No admin account exists yet. The server operator must configure an initial setup token before the first account can be created.
+            </p>
+            <p id="admin-status" class="admin-status" role="status" aria-live="polite" hidden></p>
+
+            <form id="admin-setup-form" class="admin-form" hidden>
+                <h3>Create the first administrator</h3>
+                <label for="setup-token">One-time setup token</label>
+                <input id="setup-token" name="setupToken" type="password" autocomplete="off" required>
+                <label for="setup-display-name">Display name</label>
+                <input id="setup-display-name" name="displayName" type="text" maxlength="80" autocomplete="name" required>
+                <label for="setup-username">Username</label>
+                <input id="setup-username" name="username" type="text" minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" autocomplete="username" required>
+                <label for="setup-password">Password</label>
+                <input id="setup-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
+                <button class="btn btn-danger" type="submit">Create admin account</button>
+            </form>
+
+            <form id="admin-login-form" class="admin-form">
+                <label for="login-username">Username</label>
+                <input id="login-username" name="username" type="text" minlength="3" maxlength="32" autocomplete="username" required>
+                <label for="login-password">Password</label>
+                <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+                <button class="btn btn-danger" type="submit">Sign in</button>
+            </form>
+        </section>
+
+        <section id="admin-create-panel" class="admin-auth-card" aria-labelledby="create-admin-title" hidden>
+            <h2 id="create-admin-title">Create an admin account</h2>
+            <p class="admin-detail-note">Only signed-in administrators can create additional accounts.</p>
+            <form id="admin-create-form" class="admin-form">
+                <label for="new-display-name">Display name</label>
+                <input id="new-display-name" name="displayName" type="text" maxlength="80" autocomplete="name" required>
+                <label for="new-username">Username</label>
+                <input id="new-username" name="username" type="text" minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" autocomplete="off" required>
+                <label for="new-password">Temporary password (minimum 12 characters)</label>
+                <input id="new-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
+                <button class="btn btn-danger" type="submit">Create account</button>
+            </form>
+        </section>
+
+        <p class="admin-profile-notice">Administrator accounts are managed by the site backend. Do not share passwords or setup tokens.</p>
+
+        <section class="admin-details-grid" aria-label="Organization information">
+            <article class="admin-detail-card">
+                <h2>About</h2>
+                <p>The website brings together blood donation information, donor and receiver forms, and blood availability listings. It is designed to help people learn about donation and connect with others during blood needs.</p>
+                <a href="About.html">Read more about us</a>
+            </article>
+            <article class="admin-detail-card">
+                <h2>Address</h2>
+                <p>FCRIT<br>Vashi, Navi Mumbai, Maharashtra, India</p>
+            </article>
+            <article class="admin-detail-card">
+                <h2>Contact</h2>
+                <p>Phone: <a href="tel:+919846488933">+91 98464 88933</a></p>
+            </article>
+            <article class="admin-detail-card">
+                <h2>Social Media</h2>
+                <ul>
+                    <li>Facebook: abyy.00</li>
+                    <li>X: abyy.00</li>
+                    <li>Instagram: abyy.00</li>
+                    <li>LinkedIn: abyy.00</li>
+                </ul>
+                <p class="admin-detail-note">Profile links can be added when their URLs are available.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copywrites">
+            <p>© 2026 Make A Blood Relation.</p>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

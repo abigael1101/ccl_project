@@ -78,60 +78,141 @@ footer {
     font-size: medium;
     color: #f8f9fa;
 }
-/* Chat Bot */
-.chatbot-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    max-height: 600px;
-    background-color: #ffffff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+.admin-profile {
+    max-width: 1000px;
+    margin: 48px auto;
+    padding: 0 20px;
+    color: #242424;
+}
+.admin-profile-header {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 32px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
-
-.chat-window {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
+.admin-avatar {
+    display: grid;
+    flex: 0 0 88px;
+    height: 88px;
+    place-items: center;
+    border-radius: 50%;
+    background: #7b1e1e;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
 }
-
-.chat-input {
-    display: flex;
-    padding: 20px;
+.admin-eyebrow,
+.admin-role {
+    margin-bottom: 6px;
+    color: #7b1e1e;
+    font-weight: bold;
 }
-
-.chat-input input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 3px;
+.admin-profile-header h1 {
+    margin: 0 0 8px;
+    background: none;
+    color: #242424;
+    word-spacing: normal;
 }
-
-.chat-input button[type="submit"] {
-    margin-left: 10px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
+.admin-bio {
+    margin-bottom: 0;
 }
-/* Bot boy*/
-.bot{
-    background-color: #f2f2f2;
+.admin-profile-notice,
+.admin-detail-note {
+    color: #5f6368;
+    font-size: 0.9rem;
 }
-.bot{
-    padding-left: 30px;
-    padding-top: 30px;
+.admin-profile-notice {
+    margin: 18px 0;
 }
-.iframe{
+.admin-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+.admin-detail-card {
+    padding: 22px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.admin-detail-card h2 {
+    margin-bottom: 14px;
+    color: #7b1e1e;
+    font-size: 1.35rem;
+}
+.admin-detail-card ul {
+    padding-left: 20px;
+}
+.admin-detail-card li {
+    margin-bottom: 8px;
+}
+.admin-detail-card li span {
     display: block;
-    block-size: 60%
-    height: 70%;
+    color: #5f6368;
+    font-size: 0.85rem;
 }
-#Back{
-    margin-left: 35px;
-    margin-top: 5px;
+.admin-auth-card {
+    margin: 20px 0;
+    padding: 24px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.admin-auth-card[hidden],
+.admin-form[hidden],
+.admin-auth-card p[hidden] {
+    display: none;
+}
+.admin-auth-card h2 {
+    margin-bottom: 16px;
+    color: #7b1e1e;
+    font-size: 1.4rem;
+}
+.admin-form {
+    display: grid;
+    max-width: 520px;
+    gap: 8px;
+}
+.admin-form h3 {
+    margin: 6px 0;
+    color: #343a40;
+    font-size: 1.1rem;
+}
+.admin-form label {
+    margin: 8px 0 0;
+    font-weight: 600;
+}
+.admin-form input {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+.admin-form input:focus {
+    border-color: #7b1e1e;
+    outline: 2px solid rgba(123, 30, 30, 0.18);
+}
+.admin-form button {
+    justify-self: start;
+    margin-top: 12px;
+}
+.admin-status {
+    margin: 0 0 16px;
+    color: #19692c;
+}
+.admin-status-error {
+    color: #a32121;
+}
+@media (max-width: 576px) {
+    .admin-profile-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 24px;
+    }
 }

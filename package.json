@@ -1,0 +1,13 @@
+{
+  "name": "make-a-blood-relation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Blood donation information website with an admin-only account service",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

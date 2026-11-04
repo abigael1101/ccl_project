@@ -15,7 +15,6 @@ To save lives and to step forward for donating blood, let's join hands and take 
  1. Storage account
  1. Azure Backup service
  1. Azure ai services
- 1. chatbot
 
 # Problem statement:
  
@@ -35,10 +34,6 @@ The key features of the project comprise a welcoming page, a home page, donor an
 **Azure Storage Account:-** Azure Storage Account is a foundational component in Microsoft Azure, providing secure and scalable cloud storage. It supports various storage services like Blob, File, Queue, and Table, accommodating diverse data types. With features such as redundancy options and access controls, it ensures reliable and efficient data management.
  **Azure Backup Service:-** Azure Backup Service by Microsoft safeguards critical data in the Azure cloud. It offers automated and scalable backup solutions for virtual machines, applications, and files. With features like long-term retention and geo-redundancy, it ensures data resilience and facilitates efficient disaster recovery, enhancing overall data protection strategies.
 
-
-# Azure AI Service
-
-**Azure Chatbot :-** The Azure AI Language Chatbot is a cutting-edge conversational agent powered by Microsoft's Azure platform. Leveraging advanced natural language processing capabilities, it facilitates dynamic and context-aware interactions. This intelligent chatbot employs machine learning algorithms to comprehend user queries, providing personalized responses and assistance across diverse domains. Seamlessly integrating with Azure services, it ensures scalability and reliability.
 
 # Screenshot’s:
 **Storage account**
@@ -64,8 +59,6 @@ The key features of the project comprise a welcoming page, a home page, donor an
 **Azure Static Website:-** Azure Static Website is a hosting service in Microsoft Azure designed for deploying and serving static web content. With features like global content delivery, automatic scaling, and seamless integration with Azure Storage, it provides a reliable and cost-effective solution for hosting HTML, CSS, and JavaScript-based websites with minimal configuration.
 **Azure Backup Service:-** Azure Backup Service in Microsoft Azure ensures data resilience with automated, scalable backup solutions. Supporting virtual machines, applications, and files, it offers features like long-term retention and geo-redundancy. This service enhances overall data protection, enabling efficient disaster recovery and secure backup management in the Azure cloud environment.
 
-**Azure Chatbot:-** The Azure AI Language Chatbot is a cutting-edge conversational agent powered by Microsoft's Azure platform. Leveraging advanced natural language processing capabilities, it facilitates dynamic and context-aware interactions. This intelligent chatbot employs machine learning algorithms to comprehend user queries, providing personalized responses and assistance across diverse domains. Seamlessly integrating with Azure services, it ensures scalability and reliability.
-
 # Description 
 Here I am attaching the final working website's screenshot for the reference.
 
@@ -84,8 +77,6 @@ https://cdn.examlounge.com/resources/images/PicsArt_11-12-12.14.54_(1)_009160654
 ![Screenshot (62)](https://github.com/MdSohail-github/Blood-Bank-project/assets/126046626/63cb26d2-cbd3-4a08-8743-21f1f3f86b1e)
 **About**
 ![Screenshot (63)](https://github.com/MdSohail-github/Blood-Bank-project/assets/126046626/2d5322ef-507f-4450-8318-2d81377c0b80)
-**chatbot**
-![Screenshot (64)](https://github.com/MdSohail-github/Blood-Bank-project/assets/126046626/73aebe23-57c5-4042-86c2-0d8fc6b867a7)
 
 
 
@@ -94,3 +85,20 @@ https://cdn.examlounge.com/resources/images/PicsArt_11-12-12.14.54_(1)_009160654
 The Blood Donation Project aims to establish a comprehensive system facilitating donor registration, appointment scheduling, and real-time inventory tracking. Utilizing a user-friendly interface, the project encourages donor engagement through notifications and updates, ultimately enhancing the efficiency of blood collection, storage, and distribution to meet critical healthcare needs
 
 # blood-bank-and-donation-management-system
+
+## Admin profile
+
+The Admin Profile page is available at `Admin.html`. Admins can sign in and create additional admin accounts. The first administrator is provisioned with a one-time server setup token; public self-registration is not available. Passwords are stored as scrypt hashes, and sessions use HTTP-only cookies.
+
+### Run the website and admin service
+
+Requires Node.js 22.5 or later with the built-in SQLite module.
+
+```sh
+export ADMIN_SETUP_TOKEN="$(openssl rand -base64 32)"
+npm start
+```
+
+Open `http://localhost:3000/Admin.html` and use the setup token to create the first administrator. Keep the token secret; after the first account is created, it can be removed from the server environment. Admin accounts are stored in `data/admin.sqlite` by default; set `DATABASE_PATH` to a persistent location when deploying. Production deployments must use HTTPS (`NODE_ENV=production`) so session cookies are secure. Static Azure Storage hosting cannot run the login backend; deploy the Node server and static pages together on a Node-capable host.
+
+The public organization details shown on the site are FCRIT, Vashi, Navi Mumbai, Maharashtra, India; phone +91 98464 88933; and social handle `abyy.00`. Confirm that the handle belongs to each displayed platform before publishing.
