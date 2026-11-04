@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add donor | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/donors.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="add-donor">
+      <div class="page-heading"><div><h1>Add a donor</h1><p>New donors receive an ID automatically when this form is saved.</p></div><div class="heading-actions"><a class="button secondary" href="/donors.html"><i class="fa-solid fa-arrow-left"></i> Donor directory</a></div></div>
+      <div class="notice"><i class="fa-solid fa-flask"></i><span>Academic demonstration only — use fictional contact details. Registration date and donor ID are assigned automatically.</span></div>
+      <form id="add-donor-form" class="form-card">
+        <h2 class="form-section-title">Personal details</h2>
+        <div class="form-grid">
+          <div class="form-field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" class="field" maxlength="100" required></div>
+          <div class="form-field"><label for="age">Age *</label><input id="age" name="age" class="field" type="number" min="18" max="65" required></div>
+          <div class="form-field"><label for="gender">Gender *</label><select id="gender" name="gender" class="select" required><option value="">Select gender</option><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>
+          <div class="form-field"><label for="bloodGroup">Blood group *</label><select id="bloodGroup" name="bloodGroup" class="select" required><option value="">Select blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+          <div class="form-field"><label for="phone">Phone number *</label><input id="phone" name="phone" class="field" type="tel" maxlength="32" pattern="\+?[0-9][0-9\s\(\)\-]{6,30}" placeholder="+91 90000 00000" required></div>
+          <div class="form-field"><label for="email">Email address *</label><input id="email" name="email" class="field" type="email" maxlength="254" placeholder="name@example.org" required></div>
+          <div class="form-field full"><label for="address">Address *</label><input id="address" name="address" class="field" maxlength="160" required></div>
+          <div class="form-field"><label for="city">City *</label><input id="city" name="city" class="field" maxlength="80" required></div>
+          <div class="form-field"><label for="state">State *</label><input id="state" name="state" class="field" maxlength="80" required></div>
+          <div class="form-field"><label for="pincode">Pincode *</label><input id="pincode" name="pincode" class="field" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required></div>
+          <div class="form-field"><label for="lastDonationDate">Last donation date</label><input id="lastDonationDate" name="lastDonationDate" class="field" type="date"></div>
+          <div class="form-field"><label for="availabilityStatus">Availability status *</label><select id="availabilityStatus" name="availabilityStatus" class="select" required><option>Available</option><option>Unavailable</option><option>Temporarily unavailable</option></select></div>
+        </div>
+        <div class="form-footer"><a class="button secondary" href="/donors.html">Cancel</a><button class="button" type="submit"><i class="fa-solid fa-user-plus"></i> Register donor</button></div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

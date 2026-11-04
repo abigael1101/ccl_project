@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Donor management | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/donors.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="donors">
+      <div class="page-heading"><div><h1>Donor management</h1><p>Search, review and manage your registered donor records.</p></div><div class="heading-actions"><a class="button secondary" href="/api/export/donors"><i class="fa-solid fa-download"></i> Export CSV</a><a class="button" href="/add-donor.html"><i class="fa-solid fa-user-plus"></i> Add donor</a></div></div>
+      <div class="toolbar">
+        <label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="donor-search" class="field" placeholder="Search name or donor ID…" aria-label="Search donors"></label>
+        <select id="blood-filter" class="select" aria-label="Filter by blood group"><option value="">All blood groups</option></select>
+        <select id="city-filter" class="select" aria-label="Filter by city"><option value="">All cities</option></select>
+        <select id="availability-filter" class="select" aria-label="Filter by availability"><option value="">All availability</option><option>Available</option><option>Unavailable</option><option>Temporarily unavailable</option></select>
+      </div>
+      <section class="panel">
+        <div class="panel-header"><div><h2 class="panel-title">Registered donors</h2><p id="donor-count" class="panel-subtitle">Loading donor records…</p></div><span class="status available"><i class="fa-solid fa-flask"></i> DEMO DATA</span></div>
+        <div id="donor-table" class="table-wrap"></div>
+        <div id="donor-pagination" class="pagination"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

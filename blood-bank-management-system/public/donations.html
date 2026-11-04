@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Donation records | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/donations.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="donations">
+      <div class="page-heading"><div><h1>Donation records</h1><p>Record a donation and keep collection history up to date.</p></div><div class="heading-actions"><a class="button secondary" href="/api/export/donations"><i class="fa-solid fa-download"></i> Export CSV</a></div></div>
+      <section class="panel" style="margin-bottom:17px">
+        <div class="panel-header"><div><h2 class="panel-title">Record a donation</h2><p class="panel-subtitle">A successful donation automatically adds units to inventory.</p></div><span class="status available">DEMO DATA</span></div>
+        <div class="panel-body">
+          <form id="donation-form" class="form-grid">
+            <div class="form-field"><label for="donorId">Donor *</label><select class="select" id="donorId" name="donorId" required><option value="">Loading donors…</option></select></div>
+            <div class="form-field"><label for="units">Units donated *</label><input class="field" id="units" name="units" type="number" min="1" max="5" value="1" required></div>
+            <div class="form-field"><label for="donationDate">Donation date *</label><input class="field" id="donationDate" name="donationDate" type="date" required></div>
+            <div class="form-field"><label for="location">Donation location *</label><input class="field" id="location" name="location" maxlength="120" placeholder="Blood centre or camp" required></div>
+            <div class="form-field full"><label for="remarks">Remarks</label><input class="field" id="remarks" name="remarks" maxlength="500" placeholder="Optional notes"></div>
+            <div class="form-field full"><div class="form-footer" style="margin-top:0;padding-top:0;border:0"><button class="button" type="submit"><i class="fa-solid fa-plus"></i> Save donation</button></div></div>
+          </form>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-header"><div><h2 class="panel-title">Donation history</h2><p id="donation-count" class="panel-subtitle">Loading donation records…</p></div></div>
+        <div class="toolbar" style="padding:14px 15px 0"><label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="donation-search" class="field" placeholder="Search donor, ID or blood group…" aria-label="Search donations"></label></div>
+        <div id="donation-table" class="table-wrap"></div><div id="donation-pagination" class="pagination"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blood inventory | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/inventory.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="inventory">
+      <div class="page-heading"><div><h1>Blood inventory</h1><p>Monitor stock across all eight blood groups and record movements.</p></div><div class="heading-actions"><button id="history-button" class="button secondary" type="button"><i class="fa-solid fa-clock-rotate-left"></i> Stock history</button></div></div>
+      <div class="notice"><i class="fa-solid fa-circle-info"></i><span>Donations and fulfilled requests update stock automatically. Manual adjustments are recorded in stock history.</span></div>
+      <div class="toolbar"><label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="inventory-search" class="field" placeholder="Search blood group…" aria-label="Search inventory"></label><span class="status available">Available</span><span class="status low">Low · 4–9 units</span><span class="status critical">Critical · 0–3 units</span></div>
+      <section id="inventory-cards" class="inventory-grid" aria-label="Blood group stock"></section>
+      <section class="panel" style="margin-top:18px">
+        <div class="panel-header"><div><h2 class="panel-title">Stock summary</h2><p class="panel-subtitle">Donation and issue totals by blood group</p></div></div>
+        <div id="inventory-table" class="table-wrap"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#35131f">
+  <title>Admin sign in | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/login.js" defer></script>
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-art" aria-label="Blood donation management">
+      <a class="login-brand" href="/"><span class="brand-icon"><i class="fa-solid fa-droplet"></i></span> REDLINE <span style="font-weight:400">BLOOD BANK</span></a>
+      <div class="login-hero">
+        <p class="eyebrow">Blood Bank Management System</p>
+        <h1>Every donation<br>can change a life.</h1>
+        <p>A focused workspace to manage donors, track blood stock, record donations and respond to requests — all in one place.</p>
+      </div>
+      <div class="login-art-foot">Academic project • Fictional demonstration data only</div>
+    </section>
+    <section class="login-panel-wrap">
+      <div class="login-panel">
+        <p class="admin-eyebrow" style="margin:0 0 10px;color:var(--red);font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase">ADMIN PORTAL</p>
+        <h2>Welcome back</h2>
+        <p>Sign in to open your blood bank operations dashboard.</p>
+        <div class="demo-credentials" aria-label="Demo login credentials">
+          <div class="demo-credentials-title"><i class="fa-solid fa-circle-info"></i> Demo access credentials</div>
+          <div class="demo-credential-line"><span>Username</span><strong>admin</strong></div>
+          <div class="demo-credential-line"><span>Password</span><strong>admin123</strong></div>
+        </div>
+        <form id="login-form" class="login-form">
+          <div>
+            <label for="username">Username</label>
+            <input id="username" class="field" name="username" value="admin" autocomplete="username" required>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <div class="password-field">
+              <input id="password" class="field" name="password" type="password" autocomplete="current-password" required>
+              <button id="password-toggle" class="password-toggle" type="button" aria-label="Show password"><i class="fa-regular fa-eye"></i></button>
+            </div>
+          </div>
+          <p id="login-error" class="login-error" role="alert" hidden></p>
+          <button id="login-submit" class="button" type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i> Sign in to dashboard</button>
+        </form>
+        <p class="login-footnote">For academic demonstration only. Do not enter real donor or patient information.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

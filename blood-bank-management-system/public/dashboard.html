@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="./js/app.js" defer></script>
+  <script src="./js/dashboard.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="dashboard">
+      <div class="page-heading"><div><h1>Dashboard</h1><p>Overview of blood bank activity and available stock.</p></div><div class="heading-actions">      <a class="button secondary" href="/Index.html"><i class="fa-solid fa-house"></i> Main website</a><a class="button secondary" href="/api/export/donors"><i class="fa-solid fa-download"></i> Export donors</a></div></div>
+      <section id="dashboard-stats" class="stats-grid" aria-label="Dashboard statistics"><div class="loading"><i class="fa-solid fa-spinner fa-spin"></i>Loading live statistics…</div></section>
+      <section class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-header"><div><h2 class="panel-title">Blood group overview</h2><p class="panel-subtitle">Available stock and registered donors</p></div><a class="button secondary small" href="/inventory.html">View inventory</a></div>
+          <div class="panel-body"><div class="chart-wrap"><canvas id="blood-chart" aria-label="Available stock by blood group"></canvas></div></div>
+        </article>
+        <article class="panel">
+          <div class="panel-header"><div><h2 class="panel-title">Notifications</h2><p class="panel-subtitle">Items that may need attention</p></div><i class="fa-regular fa-bell" style="color:var(--red)"></i></div>
+          <div id="notifications-list" class="panel-body"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-header"><div><h2 class="panel-title">Recent donor registrations</h2><p class="panel-subtitle">Latest additions to your donor directory</p></div><a class="button secondary small" href="/donors.html">All donors</a></div>
+          <div id="recent-donors" class="table-wrap"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-header"><div><h2 class="panel-title">Recent blood requests</h2><p class="panel-subtitle">Latest patient and hospital requests</p></div><a class="button secondary small" href="/requests.html">All requests</a></div>
+          <div id="recent-requests" class="table-wrap"></div>
+        </article>
+      </section>
+      <section class="panel" style="margin-top:17px">
+        <div class="panel-header"><div><h2 class="panel-title">Quick actions</h2><p class="panel-subtitle">Common tasks for your blood bank</p></div></div>
+        <div class="panel-body"><div class="quick-actions">
+          <a class="quick-action" href="/add-donor.html"><i class="fa-solid fa-user-plus"></i><span><strong>Register a donor</strong><span>Add donor details</span></span></a>
+          <a class="quick-action" href="/donations.html"><i class="fa-solid fa-droplet"></i><span><strong>Record a donation</strong><span>Update blood stock</span></span></a>
+          <a class="quick-action" href="/requests.html"><i class="fa-solid fa-file-medical"></i><span><strong>Review requests</strong><span>Respond to patients</span></span></a>
+        </div></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

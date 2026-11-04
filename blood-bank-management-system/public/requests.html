@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blood requests | Redline Blood Bank</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/requests.js" defer></script>
+</head>
+<body>
+  <div id="application">
+    <main id="app-content" data-page="requests">
+      <div class="page-heading"><div><h1>Blood requests</h1><p>Manage patient requests and fulfill them from available stock.</p></div><div class="heading-actions"><a class="button secondary" href="/api/export/requests"><i class="fa-solid fa-download"></i> Export CSV</a></div></div>
+      <section class="panel" style="margin-bottom:17px">
+        <div class="panel-header"><div><h2 class="panel-title">Create a blood request</h2><p class="panel-subtitle">New requests start as pending and do not reserve stock.</p></div><span class="status available">DEMO DATA</span></div>
+        <div class="panel-body"><form id="request-form" class="form-grid">
+          <div class="form-field"><label for="patientName">Patient name *</label><input id="patientName" name="patientName" class="field" maxlength="100" required></div>
+          <div class="form-field"><label for="hospitalName">Hospital name *</label><input id="hospitalName" name="hospitalName" class="field" maxlength="120" required></div>
+          <div class="form-field"><label for="bloodGroup">Blood group required *</label><select id="bloodGroup" name="bloodGroup" class="select" required><option value="">Select blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+          <div class="form-field"><label for="units">Units required *</label><input id="units" name="units" class="field" type="number" min="1" max="20" value="1" required></div>
+          <div class="form-field"><label for="contactNumber">Contact number *</label><input id="contactNumber" name="contactNumber" class="field" type="tel" maxlength="32" pattern="\+?[0-9][0-9\s\(\)\-]{6,30}" required></div>
+          <div class="form-field"><label for="requestDate">Request date *</label><input id="requestDate" name="requestDate" class="field" type="date" required></div>
+          <div class="form-field"><label for="priority">Priority *</label><select id="priority" name="priority" class="select" required><option>Normal</option><option>High</option><option>Urgent</option></select></div>
+          <div class="form-field full"><div class="form-footer" style="margin-top:0;padding-top:0;border:0"><button class="button" type="submit"><i class="fa-solid fa-plus"></i> Add request</button></div></div>
+        </form></div>
+      </section>
+      <section class="panel">
+        <div class="panel-header"><div><h2 class="panel-title">Request register</h2><p id="request-count" class="panel-subtitle">Loading requests…</p></div></div>
+        <div class="toolbar" style="padding:14px 15px 0">
+          <label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="request-search" class="field" placeholder="Search patient, hospital or request ID…" aria-label="Search requests"></label>
+          <select id="request-blood-filter" class="select" aria-label="Filter blood group"><option value="">All blood groups</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+          <select id="request-status-filter" class="select" aria-label="Filter request status"><option value="">All statuses</option><option>Pending</option><option>Approved</option><option>Rejected</option><option>Completed</option></select>
+        </div>
+        <div id="request-table" class="table-wrap"></div><div id="request-pagination" class="pagination"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -4,3 +4,6 @@
 data/
 node_modules/
 npm-debug.log*
+
+!blood-bank-management-system/data/
+blood-bank-management-system/data/sessions.json

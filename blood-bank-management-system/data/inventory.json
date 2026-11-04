@@ -1,0 +1,17 @@
+{
+  "items": [
+    {"bloodGroup":"A+","availableUnits":10,"totalDonations":3,"totalUnitsIssued":1},
+    {"bloodGroup":"A-","availableUnits":5,"totalDonations":1,"totalUnitsIssued":0},
+    {"bloodGroup":"B+","availableUnits":6,"totalDonations":1,"totalUnitsIssued":1},
+    {"bloodGroup":"B-","availableUnits":4,"totalDonations":1,"totalUnitsIssued":0},
+    {"bloodGroup":"AB+","availableUnits":6,"totalDonations":2,"totalUnitsIssued":0},
+    {"bloodGroup":"AB-","availableUnits":3,"totalDonations":1,"totalUnitsIssued":0},
+    {"bloodGroup":"O+","availableUnits":10,"totalDonations":3,"totalUnitsIssued":2},
+    {"bloodGroup":"O-","availableUnits":5,"totalDonations":1,"totalUnitsIssued":0}
+  ],
+  "history": [
+    {"id":"STK-0001","bloodGroup":"A+","change":1,"kind":"issue","date":"2026-10-28","note":"Request REQ-0001 fulfilled"},
+    {"id":"STK-0002","bloodGroup":"B+","change":1,"kind":"issue","date":"2026-10-30","note":"Request REQ-0002 fulfilled"},
+    {"id":"STK-0003","bloodGroup":"O+","change":2,"kind":"issue","date":"2026-11-01","note":"Request REQ-0003 fulfilled"}
+  ]
+}

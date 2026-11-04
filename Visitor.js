@@ -1,18 +1,58 @@
 'use strict';
 
+async function getSession(endpoint) {
+  const response = await fetch(endpoint, { credentials: 'same-origin' });
+  if (response.status === 401 || response.status === 404) return null;
+  if (!response.ok) throw new Error('Unable to verify your sign-in.');
+  return response.json();
+}
+
 async function addVisitorNavigation() {
   const navigation = document.querySelector('.navbar-nav, .nav');
   if (!navigation) return;
 
   try {
-    const response = await fetch('/api/visitor-session', { credentials: 'same-origin' });
-    if (response.status === 401) {
-      window.location.replace('/Login.html');
+    let session = await getSession('/api/auth/session');
+    let logoutEndpoint = '/api/auth/logout';
+    let isAdmin = Boolean(session);
+
+    if (!session) {
+      session = await getSession('/api/session');
+      logoutEndpoint = '/api/logout';
+      isAdmin = Boolean(session);
+    }
+
+    if (!session) {
+      session = await getSession('/api/visitor-session');
+      logoutEndpoint = '/api/visitor-logout';
+    }
+
+    if (!session) {
+      window.location.replace('/login.html');
       return;
     }
-    if (!response.ok) throw new Error('Unable to verify your sign-in.');
 
-    const { user, csrfToken } = await response.json();
+    const { user, csrfToken } = session;
+    if (isAdmin) {
+      document.querySelectorAll('a[href]').forEach((link) => {
+        if (link.getAttribute('href')?.toLowerCase() === 'admin.html') {
+          link.href = '/dashboard.html';
+          link.textContent = 'Admin Dashboard';
+        }
+      });
+
+      if (!navigation.querySelector('a[href="/dashboard.html"]')) {
+        const dashboard = document.createElement('li');
+        dashboard.className = 'nav-item';
+        const dashboardLink = document.createElement('a');
+        dashboardLink.className = 'nav-link';
+        dashboardLink.href = '/dashboard.html';
+        dashboardLink.textContent = 'Admin Dashboard';
+        dashboard.append(dashboardLink);
+        navigation.append(dashboard);
+      }
+    }
+
     const item = document.createElement('li');
     item.className = 'nav-item visitor-session-nav';
 
@@ -28,10 +68,14 @@ async function addVisitorNavigation() {
     logout.addEventListener('click', async () => {
       logout.disabled = true;
       try {
-        const logoutResponse = await fetch('/api/visitor-logout', {
+        const logoutResponse = await fetch(logoutEndpoint, {
           method: 'POST',
           credentials: 'same-origin',
-          headers: { 'X-CSRF-Token': csrfToken }
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken
+          },
+          body: ['api/logout', 'api/auth/logout'].some((path) => logoutEndpoint.endsWith(path)) ? '{}' : undefined
         });
         if (!logoutResponse.ok) {
           const result = await logoutResponse.json();

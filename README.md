@@ -1,5 +1,9 @@
 # Make a Blood-Relation:
 
+## Blood Bank Management System demo
+
+A complete Express and JSON-file-based academic management dashboard is available in [`blood-bank-management-system/`](./blood-bank-management-system/). Open that folder in VS Code, run `npm install` followed by `npm start`, then visit `http://localhost:3000`. Sign in with `admin` / `admin123` to open the existing `Index.html` website; use its navigation to reach the Admin Dashboard. There is only one home page now. See the app [README](./blood-bank-management-system/README.md) for features, data files, and safety notes. This app uses fictional demo records and is not for real donor or patient data.
+
 To save lives and to step forward for donating blood, let's join hands and take a stride together
 
  # Project Details

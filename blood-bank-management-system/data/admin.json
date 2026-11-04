@@ -1,0 +1,10 @@
+{
+  "accounts": [
+    {
+      "username": "admin",
+      "displayName": "Demo Administrator",
+      "passwordSalt": "Ymxvb2RiYW5rLWRlbW8tc2FsdC0yMDI2",
+      "passwordHash": "psNY3LEWVSWkgRabnHMiYD6TNDfePqtu_eNQZvV58nvKZzgT4om2npV0mnw13OSeoVyP6-s2SlikkAyD-ADw5g"
+    }
+  ]
+}
