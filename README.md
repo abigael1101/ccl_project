@@ -106,3 +106,17 @@ Open `http://localhost:3000/` to create a demo visitor account or sign in. The w
 Open `http://localhost:3000/Admin.html` after signing in as a visitor to access the separate admin sign-in and account creation flow. Use `ADMIN_SETUP_TOKEN` to create the first administrator. Keep the token secret; after the first account is created, it can be removed from the server environment. Production deployments must use HTTPS (`NODE_ENV=production`) so session cookies are secure. Static Azure Storage hosting cannot run the login backend; deploy the Node server and static pages together on a Node-capable host.
 
 The public organization details shown on the site are FCRIT, Vashi, Navi Mumbai, Maharashtra, India; phone +91 98464 88933; and social handle `abyy.00`. Confirm that the handle belongs to each displayed platform before publishing.
+
+### Deploy with Netlify and Supabase
+
+The Netlify deployment uses a Functions API and an Edge Function to protect the site pages. Create a Supabase project, then run [`supabase/schema.sql`](./supabase/schema.sql) in its SQL Editor before deploying.
+
+Add these server-side environment variables in the Netlify site settings. Make them available to both Functions and Edge Functions:
+
+- `SUPABASE_URL`: the Supabase project URL.
+- `SUPABASE_SERVICE_ROLE_KEY`: the project service-role key. Treat this as a secret; never add it to browser code or commit it.
+- `ADMIN_SETUP_TOKEN`: a strong, one-time token used to create the first administrator. Generate one with `openssl rand -base64 32`.
+
+Deploy or redeploy the site after configuring the variables. Open `/Admin.html` and use the setup token to create the first administrator. Remove `ADMIN_SETUP_TOKEN` from Netlify once setup succeeds. Visitors can then create accounts or sign in from the site entry page; the pages require a visitor session. Keep the Supabase service-role key configured for the API and page gate. Netlify must serve the site over HTTPS so authentication cookies are secure.
+
+The local Node/SQLite service and the Netlify/Supabase service are separate backends. Supabase accounts are not automatically copied to or from the local SQLite database.

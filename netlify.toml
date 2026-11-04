@@ -1,0 +1,19 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/"
+  to = "/Index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api?endpoint=:splat"
+  status = 200
+  force = true
+
+[[edge_functions]]
+  function = "visitor-gate"
+  path = "/*"
