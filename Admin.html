@@ -43,6 +43,8 @@
                 <p class="admin-eyebrow">Signed-in account</p>
                 <h2 id="signed-in-title">Welcome, <span id="profile-name"></span></h2>
                 <p><span id="profile-username"></span> · <span id="profile-role"></span></p>
+                <p>Email: <span id="profile-email"></span></p>
+                <p>Phone: <span id="profile-phone"></span></p>
             </div>
             <button id="admin-logout" class="btn btn-outline-danger" type="button">Sign out</button>
         </section>
@@ -62,6 +64,10 @@
                 <input id="setup-display-name" name="displayName" type="text" maxlength="80" autocomplete="name" required>
                 <label for="setup-username">Username</label>
                 <input id="setup-username" name="username" type="text" minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" autocomplete="username" required>
+                <label for="setup-email">Email</label>
+                <input id="setup-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+                <label for="setup-phone">Phone</label>
+                <input id="setup-phone" name="phone" type="tel" maxlength="32" autocomplete="tel" required>
                 <label for="setup-password">Password</label>
                 <input id="setup-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
                 <button class="btn btn-danger" type="submit">Create admin account</button>
@@ -84,6 +90,10 @@
                 <input id="new-display-name" name="displayName" type="text" maxlength="80" autocomplete="name" required>
                 <label for="new-username">Username</label>
                 <input id="new-username" name="username" type="text" minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" autocomplete="off" required>
+                <label for="new-email">Email</label>
+                <input id="new-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+                <label for="new-phone">Phone</label>
+                <input id="new-phone" name="phone" type="tel" maxlength="32" autocomplete="tel" required>
                 <label for="new-password">Temporary password (minimum 12 characters)</label>
                 <input id="new-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
                 <button class="btn btn-danger" type="submit">Create account</button>
@@ -116,6 +126,13 @@
                 </ul>
                 <p class="admin-detail-note">Profile links can be added when their URLs are available.</p>
             </article>
+        </section>
+
+        <section class="admin-directory" aria-labelledby="admin-directory-title">
+            <h2 id="admin-directory-title">Administrator profiles</h2>
+            <p class="admin-detail-note">Admin account names, usernames, email addresses, and phone numbers are publicly visible here.</p>
+            <p id="admin-directory-status" class="admin-status" role="status" aria-live="polite">Loading admin profiles…</p>
+            <div id="admin-directory" class="admin-directory-grid"></div>
         </section>
     </main>
 

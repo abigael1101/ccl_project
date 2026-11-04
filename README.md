@@ -88,7 +88,9 @@ The Blood Donation Project aims to establish a comprehensive system facilitating
 
 ## Admin profile
 
-The Admin Profile page is available at `Admin.html`. Admins can sign in and create additional admin accounts. The first administrator is provisioned with a one-time server setup token; public self-registration is not available. Passwords are stored as scrypt hashes, and sessions use HTTP-only cookies.
+The Admin Profile page is available at `Admin.html`. Admins can sign in and create additional admin accounts with a display name, username, email, phone number, and password. New account details appear in the public administrator profiles list immediately. The first administrator is provisioned with a one-time server setup token; public self-registration is not available. Passwords are stored as scrypt hashes, and sessions use HTTP-only cookies.
+
+Administrator email addresses and phone numbers are public on the profile page. Only create accounts with contact details intended for public display.
 
 ### Run the website and admin service
 

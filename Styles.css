@@ -209,6 +209,40 @@ footer {
 .admin-status-error {
     color: #a32121;
 }
+.admin-directory {
+    margin-top: 32px;
+}
+.admin-directory > h2 {
+    margin-bottom: 12px;
+    color: #7b1e1e;
+}
+.admin-directory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+.admin-directory-card {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 20px;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow-wrap: anywhere;
+}
+.admin-directory-card h3 {
+    margin: 0;
+    color: #343a40;
+    font-size: 1.2rem;
+}
+.admin-directory-card p {
+    margin: 0;
+}
+.admin-directory-card a {
+    color: #7b1e1e;
+}
 @media (max-width: 576px) {
     .admin-profile-header {
         align-items: flex-start;

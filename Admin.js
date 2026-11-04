@@ -7,6 +7,8 @@ const accountForm = document.querySelector('#admin-create-form');
 const accountPanel = document.querySelector('#admin-create-panel');
 const profile = document.querySelector('#signed-in-profile');
 const statusMessage = document.querySelector('#admin-status');
+const directory = document.querySelector('#admin-directory');
+const directoryStatus = document.querySelector('#admin-directory-status');
 let csrfToken = '';
 
 function showStatus(message, isError = false) {
@@ -22,6 +24,55 @@ function displayProfile(user) {
   document.querySelector('#profile-name').textContent = user.displayName;
   document.querySelector('#profile-username').textContent = `@${user.username}`;
   document.querySelector('#profile-role').textContent = user.role;
+  document.querySelector('#profile-email').textContent = user.email;
+  document.querySelector('#profile-phone').textContent = user.phone;
+}
+
+function renderAdminDirectory(admins) {
+  directory.replaceChildren();
+  for (const admin of admins) {
+    const card = document.createElement('article');
+    card.className = 'admin-directory-card';
+
+    const title = document.createElement('h3');
+    title.textContent = admin.displayName;
+    card.append(title);
+
+    const username = document.createElement('p');
+    username.textContent = `@${admin.username}`;
+    card.append(username);
+
+    if (admin.email) {
+      const email = document.createElement('a');
+      email.href = `mailto:${admin.email}`;
+      email.textContent = admin.email;
+      card.append(email);
+    } else {
+      const email = document.createElement('p');
+      email.textContent = 'Email not provided';
+      card.append(email);
+    }
+
+    if (admin.phone) {
+      const phone = document.createElement('a');
+      phone.href = `tel:${admin.phone.replace(/[^\d+]/g, '')}`;
+      phone.textContent = admin.phone;
+      card.append(phone);
+    } else {
+      const phone = document.createElement('p');
+      phone.textContent = 'Phone not provided';
+      card.append(phone);
+    }
+
+    directory.append(card);
+  }
+  directoryStatus.hidden = admins.length > 0;
+  if (admins.length === 0) directoryStatus.textContent = 'No administrator profiles have been created yet.';
+}
+
+async function refreshAdminDirectory() {
+  const result = await apiRequest('/api/admin-profiles');
+  renderAdminDirectory(result.admins);
 }
 
 async function apiRequest(url, { method = 'GET', body, csrf = false } = {}) {
@@ -70,11 +121,14 @@ handleForm(setupForm, async (data) => {
       setupToken: data.get('setupToken'),
       displayName: data.get('displayName'),
       username: data.get('username'),
+      email: data.get('email'),
+      phone: data.get('phone'),
       password: data.get('password')
     }
   });
   csrfToken = result.csrfToken;
   displayProfile(result.user);
+  await refreshAdminDirectory();
   showStatus('Initial administrator account created.');
 });
 
@@ -95,9 +149,12 @@ handleForm(accountForm, async (data) => {
     body: {
       displayName: data.get('displayName'),
       username: data.get('username'),
+      email: data.get('email'),
+      phone: data.get('phone'),
       password: data.get('password')
     }
   });
+  await refreshAdminDirectory();
   showStatus(`Administrator account created for ${result.user.displayName}.`);
 });
 
@@ -117,6 +174,14 @@ document.querySelector('#admin-logout').addEventListener('click', async () => {
 });
 
 async function initializeAdminProfile() {
+  try {
+    await refreshAdminDirectory();
+  } catch (error) {
+    directory.replaceChildren();
+    directoryStatus.textContent = `Admin profiles could not be loaded: ${error.message}`;
+    directoryStatus.hidden = false;
+  }
+
   try {
     const result = await apiRequest('/api/session');
     csrfToken = result.csrfToken;

@@ -49,6 +49,13 @@ function createDatabase(databasePath) {
     );
     CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expires_at);
   `);
+  const adminColumns = new Set(db.prepare('PRAGMA table_info(admins)').all().map((column) => column.name));
+  if (!adminColumns.has('email')) {
+    db.exec("ALTER TABLE admins ADD COLUMN email TEXT NOT NULL DEFAULT ''");
+  }
+  if (!adminColumns.has('phone')) {
+    db.exec("ALTER TABLE admins ADD COLUMN phone TEXT NOT NULL DEFAULT ''");
+  }
   return db;
 }
 
@@ -82,6 +89,20 @@ function validateCredentials(username, password) {
   }
 }
 
+function validateProfile(displayName, email, phone) {
+  if (typeof displayName !== 'string' || displayName.trim().length < 1 || displayName.trim().length > 80) {
+    throw new HttpError(400, 'Display name is required and must be at most 80 characters.');
+  }
+  if (typeof email !== 'string' || email.length > 254
+    || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    throw new HttpError(400, 'Enter a valid email address.');
+  }
+  if (typeof phone !== 'string' || phone.length > 32
+    || !/^\+?[0-9][0-9\s().-]{5,30}$/.test(phone.trim())) {
+    throw new HttpError(400, 'Enter a valid phone number.');
+  }
+}
+
 async function hashPassword(password, salt = crypto.randomBytes(16)) {
   const hash = await scrypt(password, salt, 64);
   return {
@@ -111,19 +132,25 @@ function createApp(options = {}) {
   const statements = {
     adminCount: db.prepare('SELECT COUNT(*) AS count FROM admins'),
     adminByUsername: db.prepare('SELECT * FROM admins WHERE username = ?'),
-    adminById: db.prepare('SELECT id, username, display_name FROM admins WHERE id = ?'),
+    adminById: db.prepare('SELECT id, username, display_name, email, phone FROM admins WHERE id = ?'),
     insertAdmin: db.prepare(`
-      INSERT INTO admins (username, display_name, password_salt, password_hash, created_at)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO admins (username, display_name, email, phone, password_salt, password_hash, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `),
     insertSession: db.prepare(`
       INSERT INTO sessions (token_hash, admin_id, csrf_token, expires_at)
       VALUES (?, ?, ?, ?)
     `),
     sessionByHash: db.prepare(`
-      SELECT sessions.csrf_token, sessions.expires_at, admins.id, admins.username, admins.display_name
+      SELECT sessions.csrf_token, sessions.expires_at, admins.id, admins.username,
+        admins.display_name, admins.email, admins.phone
       FROM sessions JOIN admins ON admins.id = sessions.admin_id
       WHERE sessions.token_hash = ?
+    `),
+    publicAdmins: db.prepare(`
+      SELECT id, username, display_name, email, phone
+      FROM admins
+      ORDER BY id
     `),
     deleteSession: db.prepare('DELETE FROM sessions WHERE token_hash = ?'),
     deleteExpiredSessions: db.prepare('DELETE FROM sessions WHERE expires_at <= ?')
@@ -135,13 +162,15 @@ function createApp(options = {}) {
     return Number(statements.adminCount.get().count);
   }
 
-  function addAdmin(username, displayName, credentials) {
+  function addAdmin(username, displayName, email, phone, credentials) {
     const now = Date.now();
     db.exec('BEGIN IMMEDIATE');
     try {
       const result = statements.insertAdmin.run(
         username.toLowerCase(),
         displayName,
+        email,
+        phone,
         credentials.salt,
         credentials.hash,
         now
@@ -169,7 +198,7 @@ function createApp(options = {}) {
     );
     response.setHeader('Set-Cookie', sessionCookie(token, SESSION_TTL_MS / 1000, secureCookies));
     return {
-      user: { id: admin.id, username: admin.username, displayName: admin.display_name, role: 'Administrator' },
+      user: createPublicUser(admin),
       csrfToken
     };
   }
@@ -245,11 +274,18 @@ function createApp(options = {}) {
       id: admin.id,
       username: admin.username,
       displayName: admin.display_name,
+      email: admin.email,
+      phone: admin.phone,
       role: 'Administrator'
     };
   }
 
   async function handleApi(request, response, pathname) {
+    if (request.method === 'GET' && pathname === '/api/admin-profiles') {
+      sendJson(response, 200, { admins: statements.publicAdmins.all().map(createPublicUser) });
+      return;
+    }
+
     if (request.method === 'GET' && pathname === '/api/setup-state') {
       sendJson(response, 200, { setupRequired: getAdminCount() === 0 });
       return;
@@ -278,13 +314,12 @@ function createApp(options = {}) {
       if (getAdminCount() !== 0) throw new HttpError(409, 'Initial setup is already complete.');
 
       const username = typeof data.username === 'string' ? data.username.trim() : '';
-      const displayName = typeof data.displayName === 'string' && data.displayName.trim()
-        ? data.displayName.trim().slice(0, 80)
-        : username;
+      const displayName = typeof data.displayName === 'string' ? data.displayName.trim() : '';
       validateCredentials(username, data.password);
+      validateProfile(displayName, data.email, data.phone);
       const credentials = await hashPassword(data.password);
       if (getAdminCount() !== 0) throw new HttpError(409, 'Initial setup is already complete.');
-      const admin = addAdmin(username, displayName, credentials);
+      const admin = addAdmin(username, displayName, data.email.trim().toLowerCase(), data.phone.trim(), credentials);
       clearAttempts(request, 'setup');
       sendJson(response, 201, createSession(response, admin));
       return;
@@ -315,13 +350,12 @@ function createApp(options = {}) {
       requireCsrf(request, session);
       const data = await readJson(request);
       const username = typeof data.username === 'string' ? data.username.trim() : '';
-      const displayName = typeof data.displayName === 'string' && data.displayName.trim()
-        ? data.displayName.trim().slice(0, 80)
-        : username;
+      const displayName = typeof data.displayName === 'string' ? data.displayName.trim() : '';
       validateCredentials(username, data.password);
+      validateProfile(displayName, data.email, data.phone);
       const credentials = await hashPassword(data.password);
       if (getAdminCount() >= 100) throw new HttpError(403, 'The maximum number of admin accounts has been reached.');
-      const admin = addAdmin(username, displayName, credentials);
+      const admin = addAdmin(username, displayName, data.email.trim().toLowerCase(), data.phone.trim(), credentials);
       sendJson(response, 201, { user: createPublicUser(admin) });
       return;
     }
