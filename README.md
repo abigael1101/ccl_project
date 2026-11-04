@@ -101,6 +101,8 @@ export ADMIN_SETUP_TOKEN="$(openssl rand -base64 32)"
 npm start
 ```
 
-Open `http://localhost:3000/Admin.html` and use the setup token to create the first administrator. Keep the token secret; after the first account is created, it can be removed from the server environment. Admin accounts are stored in `data/admin.sqlite` by default; set `DATABASE_PATH` to a persistent location when deploying. Production deployments must use HTTPS (`NODE_ENV=production`) so session cookies are secure. Static Azure Storage hosting cannot run the login backend; deploy the Node server and static pages together on a Node-capable host.
+Open `http://localhost:3000/` to create a demo visitor account or sign in. The website pages require a visitor session. Demo visitor accounts and admin accounts are stored in the local SQLite database at `data/admin.sqlite` by default; set `DATABASE_PATH` to a persistent location when deploying. Use test information rather than real sensitive data for demo visitor accounts.
+
+Open `http://localhost:3000/Admin.html` after signing in as a visitor to access the separate admin sign-in and account creation flow. Use `ADMIN_SETUP_TOKEN` to create the first administrator. Keep the token secret; after the first account is created, it can be removed from the server environment. Production deployments must use HTTPS (`NODE_ENV=production`) so session cookies are secure. Static Azure Storage hosting cannot run the login backend; deploy the Node server and static pages together on a Node-capable host.
 
 The public organization details shown on the site are FCRIT, Vashi, Navi Mumbai, Maharashtra, India; phone +91 98464 88933; and social handle `abyy.00`. Confirm that the handle belongs to each displayed platform before publishing.

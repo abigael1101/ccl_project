@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in | Make A Blood Relation</title>
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="Login.js" defer></script>
+</head>
+<body>
+    <main class="login-page">
+        <a class="login-brand" href="Login.html">Make A Blood Relation</a>
+        <section class="login-card" aria-labelledby="login-title">
+            <p class="admin-eyebrow">Welcome</p>
+            <h1 id="login-title">Sign in to continue</h1>
+            <p id="login-status" class="admin-status" role="status" aria-live="polite" hidden></p>
+
+            <form id="visitor-login-form" class="admin-form">
+                <label for="visitor-login-email">Email</label>
+                <input id="visitor-login-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+                <label for="visitor-login-password">Password</label>
+                <input id="visitor-login-password" name="password" type="password" autocomplete="current-password" required>
+                <button class="btn btn-danger" type="submit">Sign in</button>
+            </form>
+
+            <form id="visitor-register-form" class="admin-form" hidden>
+                <label for="visitor-name">Name</label>
+                <input id="visitor-name" name="displayName" type="text" maxlength="80" autocomplete="name" required>
+                <label for="visitor-email">Email</label>
+                <input id="visitor-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+                <label for="visitor-password">Password (minimum 12 characters)</label>
+                <input id="visitor-password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
+                <button class="btn btn-danger" type="submit">Create account</button>
+            </form>
+
+            <p class="login-switch">
+                <span id="signup-prompt">New here?</span>
+                <button id="show-register" type="button">Create an account</button>
+                <button id="show-login" type="button" hidden>Already have an account? Sign in</button>
+            </p>
+            <p class="login-demo-note">Demo accounts are stored in the local SQLite database. Use test information, not real sensitive data.</p>
+        </section>
+    </main>
+</body>
+</html>

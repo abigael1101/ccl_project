@@ -201,3 +201,94 @@ test('existing admin databases migrate to include public profile fields', async 
   assert.equal(legacyAdmin.email, '');
   assert.equal(legacyAdmin.phone, '');
 });
+
+test('visitor registration and login are required to access website pages', async (t) => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'mbr-visitor-test-'));
+  const app = createApp({
+    databasePath: path.join(directory, 'demo.sqlite'),
+    root: path.resolve(__dirname, '..'),
+    secureCookies: false
+  });
+  await new Promise((resolve) => app.server.listen(0, '127.0.0.1', resolve));
+  t.after(async () => {
+    await new Promise((resolve, reject) => app.server.close((error) => error ? reject(error) : resolve()));
+    app.close();
+    fs.rmSync(directory, { recursive: true, force: true });
+  });
+
+  const baseUrl = `http://127.0.0.1:${app.server.address().port}`;
+  const postJson = (endpoint, body, options = {}) => fetch(`${baseUrl}${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.cookie ? { Cookie: options.cookie } : {}),
+      ...(options.csrf ? { 'X-CSRF-Token': options.csrf } : {})
+    },
+    body: JSON.stringify(body)
+  });
+
+  const protectedPage = await fetch(`${baseUrl}/Index.html`, { redirect: 'manual' });
+  assert.equal(protectedPage.status, 302);
+  assert.equal(protectedPage.headers.get('location'), '/Login.html');
+
+  const loginPage = await fetch(`${baseUrl}/Login.html`);
+  assert.equal(loginPage.status, 200);
+
+  const invalidRegistration = await postJson('/api/register', {
+    displayName: 'Demo Visitor',
+    email: 'not-an-email',
+    password: 'Strong-Demo-Password-123!'
+  });
+  assert.equal(invalidRegistration.status, 400);
+
+  const registration = await postJson('/api/register', {
+    displayName: 'Demo Visitor',
+    email: 'demo@example.org',
+    password: 'Strong-Demo-Password-123!'
+  });
+  assert.equal(registration.status, 201);
+  const registeredUser = await registration.json();
+  const visitorCookie = registration.headers.get('set-cookie').split(';')[0];
+  assert.equal(registeredUser.user.displayName, 'Demo Visitor');
+  assert.equal(registeredUser.user.email, 'demo@example.org');
+  assert.match(registration.headers.get('set-cookie'), /HttpOnly/);
+
+  const accessiblePage = await fetch(`${baseUrl}/Index.html`, {
+    headers: { Cookie: visitorCookie }
+  });
+  assert.equal(accessiblePage.status, 200);
+
+  const duplicateRegistration = await postJson('/api/register', {
+    displayName: 'Second Visitor',
+    email: 'DEMO@example.org',
+    password: 'Another-Demo-Password-456!'
+  });
+  assert.equal(duplicateRegistration.status, 409);
+
+  const badLogin = await postJson('/api/visitor-login', {
+    email: 'demo@example.org',
+    password: 'incorrect-password'
+  });
+  assert.equal(badLogin.status, 401);
+
+  const login = await postJson('/api/visitor-login', {
+    email: 'demo@example.org',
+    password: 'Strong-Demo-Password-123!'
+  });
+  assert.equal(login.status, 200);
+  const loginResult = await login.json();
+  const loginCookie = login.headers.get('set-cookie').split(';')[0];
+  assert.equal(loginResult.user.displayName, 'Demo Visitor');
+
+  const logoutWithoutCsrf = await postJson('/api/visitor-logout', {}, { cookie: loginCookie });
+  assert.equal(logoutWithoutCsrf.status, 403);
+
+  const logout = await postJson('/api/visitor-logout', {}, {
+    cookie: loginCookie,
+    csrf: loginResult.csrfToken
+  });
+  assert.equal(logout.status, 200);
+
+  const pageAfterLogout = await fetch(`${baseUrl}/Index.html`, { redirect: 'manual' });
+  assert.equal(pageAfterLogout.status, 302);
+});
